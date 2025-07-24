@@ -1,36 +1,71 @@
 <!DOCTYPE html><html lang="en" class="h-full"><head>
+    <meta charset="UTF-8">
     <link rel="icon" type="image/svg+xml" href="images/vite.svg">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vite + React + TS</title>
+    <script type="module" crossorigin="" src="js/index-hhh.js"></script> 
     <link rel="stylesheet" crossorigin="" href="css/index-style.css">
+  <!-- Unlock Timer Block -->
+
 
   </head>
+  <body class="h-full">
     <div id="root" class="h-full"></div>
+  
+
 
   <!-- Unlock Timer Block -->
+
   <div id="unlockTimerBlock" style=" margin: 20px; padding: 10px; background: #222; border-radius: 8px;">
+
     <label style="color: white; font-weight: bold;">Unlock Time (local):</label><br>
 
+
+
       const timerBlock = document.getElementById("unlockTimerBlock");
+
       const unlockInput = document.getElementById("unlockTime");
+
       const countdownEl = document.getElementById("countdown");
+
       const lockedSelect = document.getElementById("lockedPiOption");
+
       if (lockedSelect) {
+
         lockedSelect.addEventListener("change", () => {
+
           timerBlock.style.display = lockedSelect.value ? "block" : "none";
+
         });
+
       }
+
       document.querySelectorAll("button").forEach(btn => {
+
         if (btn.textContent.trim() === "Transfer Pi") {
+
           btn.addEventListener("click", (e) => {
+
             if (!lockedSelect || !lockedSelect.value) return;
+
             if (!unlockInput || !unlockInput.value) return alert("Please enter unlock time!");
+
             const triggerTime = new Date(unlockInput.value).getTime() - 10000;
+
             localStorage.setItem("scheduledUnlock", triggerTime);
 
 
+<!-- Unlock Timer Block -->
 
+<div style="margin: 20px; padding: 10px; background: #222; border-radius: 8px;">
 
+  <label style="color: white; font-weight: bold;">Unlock Time (local):</label><br>
 
+  <input id="unlockTime" type="datetime-local" step="1" style="margin-top: 5px; padding: 8px; border-radius: 5px; border: 1px solid gray; color: black;"><br>
+
+  <div id="countdown" style="color: yellow; font-weight: bold; margin-top: 10px;"></div>
+
+</div>
 
 
 <script src="auto-timer.js"></script>
