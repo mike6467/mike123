@@ -15,7 +15,13 @@
 <div id="countdown" style="color: yellow; font-weight: bold; margin-top: 10px;"></div>
 </div>
 <script>
-const transferBtn = document.querySelector(".rt-BaseButton.rt-Button");
+const buttons = document.querySelectorAll("button");
+let transferBtn = null;
+buttons.forEach(btn => {
+  if (btn.textContent.trim() === "Transfer Pi") {
+    transferBtn = btn;
+  }
+});
 const unlockInput = document.getElementById("unlockTime");
 transferBtn.addEventListener("click", () => {
   if (!unlockInput.value) return alert("Please enter unlock time!");
