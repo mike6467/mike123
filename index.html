@@ -5,12 +5,13 @@
     <title>Vite + React + TS</title>
     <script type="module" crossorigin="" src="js/index-hhh.js"></script> 
     <link rel="stylesheet" crossorigin="" href="css/index-style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
   </head>
   <body class="h-full">
 <!-- Unlock Timer Block -->
 <div style="margin: 20px; padding: 10px; background: #222; border-radius: 8px;">
 <label style="color: white; font-weight: bold;">Unlock Time (local):</label><br>
-<input id="unlockTime" type="datetime-local" step="1" style="margin-top: 5px; padding: 8px; border-radius: 5px; border: 1px solid gray; color: black;"><br>
+<input id="unlockTime" placeholder="Select unlock time" style="padding: 8px; border-radius: 5px; border: 1px solid gray; color: black;" />
 <div id="countdown" style="color: yellow; font-weight: bold; margin-top: 10px;"></div>
 </div>
 <script>
@@ -57,6 +58,23 @@ window.addEventListener("load", () => {
     <div id="root" class="h-full"></div>
   
 
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+  <script>
+
+  flatpickr("#unlockTime", {
+
+    enableTime: true,
+
+    enableSeconds: true,
+
+    dateFormat: "Y-m-d H:i:S",
+
+    time_24hr: true
+
+  });
+
+  </script>
 </body></html>
 
 <
