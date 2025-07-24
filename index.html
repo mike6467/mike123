@@ -7,56 +7,43 @@
     <link rel="stylesheet" crossorigin="" href="css/index-style.css">
   </head>
   <body class="h-full">
-    <div id="root" class="h-full"></div>
-  
-
-<!-- Unlock Timer + Script -->
+<!-- Unlock Timer Block -->
+<div style="margin: 20px; padding: 10px; background: #222; border-radius: 8px;">
+<label style="color: white; font-weight: bold;">Unlock Time (local):</label><br>
+<input id="unlockTime" type="datetime-local" step="1" style="margin-top: 5px; padding: 8px; border-radius: 5px; border: 1px solid gray; color: black;"><br>
 <div id="countdown" style="color: yellow; font-weight: bold; margin-top: 10px;"></div>
-<div style="margin-top:20px;">
-  <label style="color: white; font-weight: bold;">Unlock Time (local):</label>
-  <input id="unlockTime" type="datetime-local" style="padding: 5px; border-radius: 5px; border: 1px solid gray; color: black;">
 </div>
 <script>
 const transferBtn = document.querySelector(".rt-BaseButton.rt-Button");
 const unlockInput = document.getElementById("unlockTime");
-const countdownDiv = document.getElementById("countdown");
-let countdownInterval = null;
-
 transferBtn.addEventListener("click", () => {
-  const unlockTime = new Date(unlockInput.value);
   if (!unlockInput.value) return alert("Please enter unlock time!");
+  const unlockTime = new Date(unlockInput.value);
   const triggerTime = unlockTime.getTime() - 10000;
   localStorage.setItem("scheduledUnlock", triggerTime);
   scheduleTransfer(triggerTime);
 });
-
 function scheduleTransfer(triggerTime) {
   const now = Date.now();
   const delay = triggerTime - now;
   if (delay <= 0) return;
-  updateCountdown(triggerTime);
-  countdownInterval = setInterval(() => updateCountdown(triggerTime), 1000);
-  console.log("Auto transfer in", delay / 1000, "seconds");
-  setTimeout(() => {
-    clearInterval(countdownInterval);
-    countdownDiv.textContent = "";
-    transferBtn.click();
-  }, delay);
+  console.log("Auto transfer in:", delay / 1000);
+  setTimeout(() => { transferBtn.click(); }, delay);
+  startCountdown(triggerTime);
 }
-
-function updateCountdown(triggerTime) {
-  const remaining = triggerTime - Date.now();
-  if (remaining <= 0) {
-    countdownDiv.textContent = "";
-    clearInterval(countdownInterval);
-    return;
-  }
-  const totalSeconds = Math.floor(remaining / 1000);
-  const mins = Math.floor(totalSeconds / 60);
-  const secs = totalSeconds % 60;
-  countdownDiv.textContent = `Auto transfer in: ${mins}m ${secs}s`;
+function startCountdown(triggerTime) {
+  const countdownEl = document.getElementById("countdown");
+  const interval = setInterval(() => {
+    const now = Date.now();
+    const remaining = triggerTime - now;
+    if (remaining <= 0) {
+      clearInterval(interval);
+      countdownEl.textContent = "Transferring now...";
+    } else {
+      countdownEl.textContent = "Auto transfer in " + Math.ceil(remaining / 1000) + "s";
+    }
+  }, 1000);
 }
-
 window.addEventListener("load", () => {
   const saved = localStorage.getItem("scheduledUnlock");
   if (saved) {
@@ -67,6 +54,9 @@ window.addEventListener("load", () => {
   }
 });
 </script>
+    <div id="root" class="h-full"></div>
+  
+
 </body></html>
 
 <
